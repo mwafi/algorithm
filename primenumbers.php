@@ -28,6 +28,6 @@ function primeNumbers(int $n): array
     return array_values(array_diff($numbers, $nonPrimeNumbers));
 }
 
-$output = primeNumbers(10000);
+$output = primeNumbers(7);
 
 print_r($output);
