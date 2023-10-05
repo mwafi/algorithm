@@ -14,7 +14,7 @@ class CanConstruct
 
         foreach ($wordBank as $word) {
 
-            if ( strpos($target, $word, $index) === $index && $this->check($target, $wordBank, $index + strlen($word), $memo) === true) {
+            if ( str_starts_with($remaining, $word) && $this->check($target, $wordBank, $index + strlen($word), $memo) === true) {
 
                 return $memo[$remaining] = true;
 
