@@ -9,7 +9,7 @@ final class LowestPositiveIntTest extends TestCase
     /**
      * @dataProvider arraysOfIntegers
      */
-    public function testPushAndPop(array $numbers, int $expected): void
+    public function testLowestPositiveInt(array $numbers, int $expected): void
     {
         $lowest_positive = new LowestPositiveInt();
 
