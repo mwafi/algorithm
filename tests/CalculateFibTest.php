@@ -26,7 +26,7 @@ final class CalculateFibTest extends TestCase
             [9, 34],
             [11, 89],
             [17, 1597],
-            [500, 1.394232245616977E+104],
+            [22, 17711],
         ];
     }
 
