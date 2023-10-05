@@ -6,22 +6,18 @@ class CanConstruct
 {
     public function check(string $target, array $wordBank, int $index = 0, array &$memo = []): bool
     {
-        $remaining = substr($target, $index);
+        $t = substr($target, $index);
 
-        if (array_key_exists($remaining, $memo)) return $memo[$remaining];
+        if ( array_key_exists($t, $memo) ) return $memo[$t];
 
-        if ($index >= strlen($target)) return $memo[$remaining] = true;
+        if ( empty($t) ) return $memo[$t] = true;
 
         foreach ($wordBank as $word) {
 
-            if ( str_starts_with($remaining, $word) && $this->check($target, $wordBank, $index + strlen($word), $memo) === true) {
-
-                return $memo[$remaining] = true;
-
-            }
+            if ( str_starts_with($t, $word) && $this->check($t, $wordBank, strlen($word), $memo) === true)  return $memo[$t] = true;
 
         }
 
-        return $memo[$remaining] = false;
+        return $memo[$t] = false;
     }
 }
