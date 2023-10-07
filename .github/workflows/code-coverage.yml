@@ -9,6 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set Xdebug mode to coverage
+        env:
+          XDEBUG_MODE: coverage
+
       - name: Install PHP 8.2
         uses: shivammathur/setup-php@v2
         with:
@@ -26,9 +30,7 @@ jobs:
         with:
           php_extensions: "xdebug"
           coverage_clover: "coverage/clover.xml"
-          env:
-            XDEBUG_MODE: coverage
-            
+
       - name: Run tests and generate code coverage report
         run: phpunit --coverage-html coverage/clover.xml
 
