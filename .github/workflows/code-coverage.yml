@@ -26,10 +26,8 @@ jobs:
         with:
           php_extensions: "xdebug"
           coverage_clover: "coverage/clover.xml"
-
-      - name: Set Xdebug mode to coverage
-        env:
-          XDEBUG_MODE: coverage
+          env:
+            XDEBUG_MODE: coverage
 
       - name: Run tests and generate code coverage report
         run: phpunit --coverage-html coverage/clover.xml
