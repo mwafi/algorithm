@@ -14,6 +14,9 @@ jobs:
         with:
           php-version: 8.2
 
+      - name: Install Composer Dependencies
+        run: composer install
+        
       - name: Run tests and generate code coverage report
         run: vendor/bin/phpunit --coverage-html /tmp/coverage
 
