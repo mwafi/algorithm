@@ -33,8 +33,10 @@ jobs:
 
       - name: Install dependencies
         run: npm install xml2js
-        
-        with:
+
+      - name: Parse XML and get node property
+        id: parse-xml
+        run:
           script: |
             const xml2js = require('xml2js');
             const fs = require('fs');
