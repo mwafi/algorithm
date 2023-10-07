@@ -26,32 +26,30 @@ jobs:
           name: code-coverage
           path: /tmp/coverage
 
-      - name: Use Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: 14 # Choose the Node.js version you want to use
 
       - name: Install dependencies
-        run: npm install xml2js
+        run: npm install xmldom
 
       - name: Parse XML and get node property
-        id: parse-xml
         run: |
-            const xml2js = require('xml2js');
-            const fs = require('fs');
+          const fs = require('fs');
+          const DOMParser = require('xmldom').DOMParser;
+          
+          // Read the XML file
+          const xmlData = fs.readFileSync('/tmp/coverage/coverage.xml', 'utf-8');
+          
+          // Parse the XML
+          const xmlDoc = new DOMParser().parseFromString(xmlData, 'text/xml');
+          
+          //result.coverage.project[0].metrics[0].coveredstatements[0];
+          // Extract the node property value (replace 'property_name' and 'node_name' with your actual property and node names)
+          const node = xmlDoc.getElementsByTagName('coverage')[0].getElementsByTagName('project')[0].getElementsByTagName('metrics')[0];
+          const propertyValue = node.getAttribute('coveredstatements');
+          
+          console.log('Property Value:', propertyValue);
 
-            // Read the XML file
-            const xmlData = fs.readFileSync('/tmp/coverage/coverage.xml', 'utf8');
-
-            // Parse the XML
-            xml2js.parseString(xmlData, (err, result) => {
-              if (err) {
-                console.error(err);
-                process.exit(1);
-              }
-
-              // Access the property value from the parsed XML
-              const propertyValue = result.coverage.project[0].metrics[0].coveredstatements[0];
-
-              console.log(`The property value is: ${propertyValue}`);
-            });
+        working-directory: ${{ github.workspace }}
