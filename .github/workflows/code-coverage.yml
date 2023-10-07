@@ -22,6 +22,7 @@ jobs:
         with:
           memory_limit: "256M"
           php_extensions: "xdebug"
+          coverage_clover: "coverage/clover.xml"
 
 #      - name: PHPUnit tests
 #        uses: php-actions/phpunit@v3
