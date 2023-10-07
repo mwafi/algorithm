@@ -25,8 +25,7 @@ jobs:
         uses: php-actions/phpunit@v3
         with:
           php_extensions: "xdebug"
-          xdebug:
-            mode: "debug"
+          xdebug.mode: "debug"
           coverage_clover: "coverage/clover.xml"
 
       - name: Run tests and generate code coverage report
