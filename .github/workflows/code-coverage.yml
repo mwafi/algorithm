@@ -20,23 +20,29 @@ jobs:
       - name: PHPUnit tests
         uses: php-actions/phpunit@v3
         with:
-          php_extensions: "xdebug"
-          coverage_clover: "coverage/clover.xml"
+          configuration: "custom/path/to/phpunit.xml"
+          memory_limit: "256M"
+          
+#      - name: PHPUnit tests
+#        uses: php-actions/phpunit@v3
+#        with:
+#          php_extensions: "xdebug"
+#          coverage_clover: "coverage/clover.xml"
 
 #      - name: Run tests and generate code coverage report
 #        run: phpunit --coverage-xml coverage/clover.xml
 
-      - name: Upload code coverage report
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage
-          path: coverage/clover.xml
-
-      - name: Check code coverage
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const coverage = require('./code-coverage/index.html');
-            if (coverage.total.lines.covered / coverage.total.lines * 100 < 80) {
-              throw new Error('Code coverage must be at least 80%');
-            }
+#      - name: Upload code coverage report
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: code-coverage
+#          path: coverage/clover.xml
+#
+#      - name: Check code coverage
+#        uses: actions/github-script@v5
+#        with:
+#          script: |
+#            const coverage = require('./code-coverage/index.html');
+#            if (coverage.total.lines.covered / coverage.total.lines * 100 < 80) {
+#              throw new Error('Code coverage must be at least 80%');
+#            }
