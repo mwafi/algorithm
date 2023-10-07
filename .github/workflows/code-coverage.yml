@@ -1,41 +1,47 @@
-name: Code Coverage
+name: PHPUnit Code Coverage
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  phpunit:
+    name: PHPUnit with Code Coverage
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Install PHP 8.2
+      - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
-          ini-values: xdebug.mode="coverage"
-          coverage: xdebug
 
-      - name: Install composer dependencies
+      - name: Install Composer Dependencies
         run: composer install
 
-      - name: PHPUnit tests
-        uses: php-actions/phpunit@v3
+      - name: Run PHPUnit with Code Coverage
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
-      - name: Run tests and generate code coverage report
-        run: phpunit --coverage-html coverage/clover.html
-
-      - name: Upload code coverage report
-        uses: actions/upload-artifact@v3
+      - name: Upload PHPUnit Coverage Report
+        uses: actions/upload-artifact@v2
         with:
-          name: code-coverage
-          path: coverage/clover.xml
+          name: coverage
+          path: coverage.xml
 
-      - name: Check code coverage
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const coverage = require('./code-coverage/index.html');
-            if (coverage.total.lines.covered / coverage.total.lines * 100 < 80) {
-              throw new Error('Code coverage must be at least 80%');
-            }
+      - name: Fail if Code Coverage is Less than 80%
+        run: |
+          if [ -f "coverage.xml" ]; then
+            coverage=$(sed -n 's/.*<coverage.*line-rate="\([0-9.]*\)".*/\1/p' coverage.xml)
+            if (( $(echo "$coverage < 0.80" | bc -l) )); then
+              echo "Code coverage is less than 80%. Current coverage: $coverage"
+              exit 1
+            else
+              echo "Code coverage is acceptable: $coverage"
+            fi
+          fi
