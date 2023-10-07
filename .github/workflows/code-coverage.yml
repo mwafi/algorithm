@@ -17,18 +17,24 @@ jobs:
       - name: Install composer dependencies
         run: composer install
 
-      - name: Install PHPUnite
-        run: composer global require phpunit/phpunit:10
-        shell: bash
+#      - name: Install PHPUnite
+#        run: composer global require phpunit/phpunit:10
+#        shell: bash
+
+      - name: PHPUnit tests
+        uses: php-actions/phpunit@v3
+        with:
+          php_extensions: "xdebug"
+          coverage_clover: "coverage/clover.xml"
 
       - name: Run tests and generate code coverage report
-        run: phpunit --coverage-html /tmp/coverage
+        run: phpunit --coverage-html coverage/clover.xml
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage
-          path: /tmp/coverage
+          path: coverage/clover.xml
 
       - name: Check code coverage
         uses: actions/github-script@v5
