@@ -18,7 +18,7 @@ jobs:
         run: composer install
 
       - name: Run tests and generate code coverage report
-        run: vendor/bin/phpunit --coverage-html /tmp/coverage
+        run: vendor/bin/phpunit --coverage-clover /tmp/coverage/coverage.xml
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
@@ -30,7 +30,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const coverage = require('/tmp/coverage/index.html');
+            const coverage = require('/tmp/coverage/coverage.xml');
             if (coverage.total.lines.covered / coverage.total.lines * 100 < 80) {
               throw new Error('Code coverage must be at least 80%');
             }
