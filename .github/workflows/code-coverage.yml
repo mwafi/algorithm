@@ -23,8 +23,8 @@ jobs:
           php_extensions: "xdebug"
           coverage_clover: "coverage/clover.xml"
 
-      - name: Run tests and generate code coverage report
-        run: phpunit --coverage-xml coverage/clover.xml
+#      - name: Run tests and generate code coverage report
+#        run: phpunit --coverage-xml coverage/clover.xml
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
