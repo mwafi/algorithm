@@ -16,7 +16,7 @@ jobs:
 
       - name: Install Composer Dependencies
         run: composer install
-        
+
       - name: Run tests and generate code coverage report
         run: vendor/bin/phpunit --coverage-html /tmp/coverage
 
@@ -30,7 +30,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const coverage = require('./code-coverage/index.html');
+            const coverage = require('/tmp/coverage/index.html');
             if (coverage.total.lines.covered / coverage.total.lines * 100 < 80) {
               throw new Error('Code coverage must be at least 80%');
             }
