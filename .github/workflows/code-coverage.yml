@@ -21,6 +21,7 @@ jobs:
         uses: php-actions/phpunit@v3
         with:
           memory_limit: "256M"
+          php_extensions: "xdebug"
 
 #      - name: PHPUnit tests
 #        uses: php-actions/phpunit@v3
