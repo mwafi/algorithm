@@ -30,10 +30,21 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const { readFileSync } = require('fs');
-            const { parse } = require('xml-parser-js');
+            const xml2js = require('xml2js');
+            const fs = require('fs');
 
-            const xml = readFileSync('/tmp/coverage/coverage.xml', 'utf8');
-            const parsedXml = parse(xml);
+            // Read the XML file
+            const xmlData = fs.readFileSync('/tmp/coverage/coverage.xml', 'utf8');
 
-            console.log(parsedXml.node.name);
+            // Parse the XML
+            xml2js.parseString(xmlData, (err, result) => {
+              if (err) {
+                console.error(err);
+                process.exit(1);
+              }
+
+              // Access the property value from the parsed XML
+              const propertyValue = result.coverage.project[0].metrics[0].coveredstatements[0];
+
+              console.log(`The property value is: ${propertyValue}`);
+            });
