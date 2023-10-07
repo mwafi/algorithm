@@ -26,8 +26,14 @@ jobs:
           name: code-coverage
           path: /tmp/coverage
 
-      - name: Check code coverage
-        uses: actions/github-script@v5
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install xml2js
+        
         with:
           script: |
             const xml2js = require('xml2js');
