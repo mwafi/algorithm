@@ -36,8 +36,7 @@ jobs:
 
       - name: Parse XML and get node property
         id: parse-xml
-        run:
-          script: |
+        run: |
             const xml2js = require('xml2js');
             const fs = require('fs');
 
