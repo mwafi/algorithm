@@ -21,12 +21,9 @@ jobs:
       #        run: composer global require phpunit/phpunit:10
       #        shell: bash
 
-      - name: Configure Xdebug
-        run: |
-          echo "xdebug.mode=debug" >> $GITHUB_WORKSPACE/php.ini
-          
       - name: PHPUnit tests
         uses: php-actions/phpunit@v3
+        run: echo "xdebug.mode=debug" >> $GITHUB_WORKSPACE/php.ini
         with:
           php_extensions: "xdebug"
           coverage_clover: "coverage/clover.xml"
