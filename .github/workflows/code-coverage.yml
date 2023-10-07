@@ -9,10 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set Xdebug mode to coverage
-        env:
-          XDEBUG_MODE: coverage
-
       - name: Install PHP 8.2
         uses: shivammathur/setup-php@v2
         with:
@@ -25,6 +21,10 @@ jobs:
       #        run: composer global require phpunit/phpunit:10
       #        shell: bash
 
+      - name: Configure Xdebug
+        run: |
+          echo "xdebug.mode=debug" >> $GITHUB_WORKSPACE/php.ini
+          
       - name: PHPUnit tests
         uses: php-actions/phpunit@v3
         with:
