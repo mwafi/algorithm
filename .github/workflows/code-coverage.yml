@@ -14,10 +14,6 @@ jobs:
         with:
           php-version: 8.2
 
-      - name: Configure Xdebug
-        run: |
-          echo "xdebug.mode=debug" >> $GITHUB_WORKSPACE/php.ini
-
       - name: Install composer dependencies
         run: composer install
 
@@ -29,6 +25,8 @@ jobs:
         uses: php-actions/phpunit@v3
         with:
           php_extensions: "xdebug"
+          xdebug:
+            mode: "debug"
           coverage_clover: "coverage/clover.xml"
 
       - name: Run tests and generate code coverage report
