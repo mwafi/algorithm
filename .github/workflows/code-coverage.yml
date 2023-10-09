@@ -18,38 +18,10 @@ jobs:
         run: composer install
 
       - name: Run tests and generate code coverage report
-        run: vendor/bin/phpunit --coverage-clover /tmp/coverage/coverage.xml
+        run: vendor/bin/phpunit --coverage-html=/tmp/coverage/
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage
           path: /tmp/coverage
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14 # Choose the Node.js version you want to use
-
-      - name: Install dependencies
-        run: npm install xmldom
-
-      - name: Parse XML and get node property
-        run: |
-          const fs = require('fs');
-          const DOMParser = require('xmldom').DOMParser;
-          
-          // Read the XML file
-          const xmlData = fs.readFileSync('/tmp/coverage/coverage.xml', 'utf-8');
-          
-          // Parse the XML
-          const xmlDoc = new DOMParser().parseFromString(xmlData, 'text/xml');
-          
-          //result.coverage.project[0].metrics[0].coveredstatements[0];
-          // Extract the node property value (replace 'property_name' and 'node_name' with your actual property and node names)
-          const node = xmlDoc.getElementsByTagName('coverage')[0].getElementsByTagName('project')[0].getElementsByTagName('metrics')[0];
-          const propertyValue = node.getAttribute('coveredstatements');
-          
-          console.log('Property Value:', propertyValue);
-
-        working-directory: ${{ github.workspace }}
