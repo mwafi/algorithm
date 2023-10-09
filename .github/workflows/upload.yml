@@ -1,17 +1,17 @@
-name: Upload file
-
-on: [push]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Create a file
-        run: echo "Hello world" > /tmp/filename.txt
-
-      - name: Upload file
-        uses: actions/upload-artifact@v3
-        with:
-          name: artifact-name
-          path: /tmp/filename.txt
+#name: Upload file
+#
+#on: [push]
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Create a file
+#        run: echo "Hello world" > /tmp/filename.txt
+#
+#      - name: Upload file
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: artifact-name
+#          path: /tmp/filename.txt

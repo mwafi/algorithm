@@ -3,19 +3,15 @@ name: Fail push if tests directory is modified or deleted
 on: [ push ]
 
 jobs:
-  fail-push:
-    runs-on: ubuntu-latest
+  - name: Verify Changed files
+    uses: tj-actions/verify-changed-files@v16
+    id: verify-changed-files
+    with:
+      files: |
+        new.txt
+        test_directory
 
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Get changed files
-        id: changed-files
-        run: git diff --name-only --diff-filter=AM HEAD^1 HEAD
-
-      - name: Fail push if tests directory is modified or deleted
-        run: |
-          if [[ "$(git ls-files -z tests)" != "" ]]; then
-            echo "Tests directory is modified or deleted. Failing push."
-            exit 1
-          fi
+  - name: Perform action when test_directory changes
+    if: contains(steps.verify-changed-files.outputs.changed_files, 'test_directory')
+    run: |
+      echo "test_directory has changed."
