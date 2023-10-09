@@ -12,9 +12,9 @@ jobs:
         id: verify-changed-files
         with:
           files: |
-            /tests
+            tests
 
       - name: Perform action when test_directory changes
-        if: contains(steps.verify-changed-files.outputs.changed_files, '/tests')
+        if: contains(steps.verify-changed-files.outputs.changed_files, 'tests')
         run: |
-          echo "/tests has changed."
+          echo "tests has changed."
