@@ -1,20 +1,20 @@
-name: Fail push if tests directory is modified or deleted
+name: CI
 
-on: [ push ]
+on: [push]
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
 
-  steps:
-    - name: Verify Changed files
-      uses: tj-actions/verify-changed-files@v16
-      id: verify-changed-files
-      with:
-        files: |
-          tests
-
-    - name: Perform action when test_directory changes
-      if: contains(steps.verify-changed-files.outputs.changed_files, 'tests')
-      run: |
-        echo "tests has changed."
+    steps:
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v16
+        id: verify-changed-files
+        with:
+          files: |
+            tests
+  
+      - name: Perform action when test_directory changes
+        if: contains(steps.verify-changed-files.outputs.changed_files, 'tests')
+        run: |
+          echo "tests has changed."
