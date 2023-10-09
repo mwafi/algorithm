@@ -3,10 +3,10 @@ name: Fail push if tests directory is modified or deleted
 on: [ push ]
 
 jobs:
-  - build-test:
+  build-test:
     runs-on: ubuntu-latest
 
-  - steps:
+  steps:
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v16
       id: verify-changed-files
